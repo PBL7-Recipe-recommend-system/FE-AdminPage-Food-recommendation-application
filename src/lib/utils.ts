@@ -60,3 +60,9 @@ export const handleChangeTotalTime = (prepTime: string, cookTime: string) => {
 
   return `${totalHours}H${totalMinutes}M`;
 };
+
+import { isValid, parse } from 'date-fns';
+export function validateDate(dateStr) {
+  const parsedDate = parse(dateStr, 'yyyy-MM-dd', new Date());
+  return isValid(parsedDate);
+}

@@ -13,6 +13,7 @@ import { useRouter } from '@/routes/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 const recipeFormSchema = z
   .object({
@@ -36,7 +37,7 @@ const StudentCreateForm = ({ modalClose }: { modalClose: () => void }) => {
     if (res.status === 200) {
       router.push(`/recipe/details/${res.data.recipeId}`)
     }
-    console.log(res.data.recipeId);
+    toast.success('Recipe created successfully');
   };
 
   return (

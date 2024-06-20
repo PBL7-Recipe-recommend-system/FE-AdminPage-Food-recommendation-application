@@ -47,13 +47,14 @@ export async function logout() {
   try {
     const token = localStorage.getItem('accessToken');
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
-      timeout: 5000 // Timeout of 5 seconds
+      headers: { Authorization: `Bearer ${token}` }
     };
     const res = await axios.post(`${LOGOUT_PATH_LOCAL}`, config);
     localStorage.removeItem('accessToken');
     return res.data;
   } catch (error) {
+    localStorage.removeItem('accessToken');
+
     return error;
   }
 }

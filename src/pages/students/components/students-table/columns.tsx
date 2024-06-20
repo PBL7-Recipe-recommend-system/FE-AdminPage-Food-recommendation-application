@@ -2,6 +2,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 import { Account } from '@/constants/data';
+import { Badge } from "@/components/ui/badge"
 
 export const columns: ColumnDef<Account>[] = [
   {
@@ -38,6 +39,14 @@ export const columns: ColumnDef<Account>[] = [
   {
     accessorKey: 'gender',
     header: 'GENDER'
+  },
+  {
+    accessorKey: 'status',
+    header: 'STATUS',
+    cell: ({ row }) => {
+      const text = row.original.isActive ? 'Active' : 'Locked';
+      return <Badge className={`${text === "Active" ? "bg-green-600" : "bg-red-600"} h-6`}>{text}</Badge>;
+    }
   },
   {
     id: 'actions',

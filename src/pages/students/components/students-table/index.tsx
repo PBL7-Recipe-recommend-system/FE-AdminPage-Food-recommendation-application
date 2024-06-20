@@ -1,6 +1,8 @@
 import DataTable from '@/components/shared/data-table';
 import { columns } from './columns';
 import StudentTableActions from './student-table-action';
+import { Toaster } from 'sonner'
+
 
 type TStudentsTableProps = {
   users: any;
@@ -15,6 +17,7 @@ export default function StudentsTable({
 }: TStudentsTableProps) {
   return (
     <>
+      <Toaster richColors position="top-right" />
       <StudentTableActions />
       {users && (
         <DataTable columns={columns} data={users} pageCount={pageCount} />

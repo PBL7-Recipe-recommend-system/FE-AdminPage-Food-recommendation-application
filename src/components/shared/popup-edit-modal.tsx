@@ -16,15 +16,14 @@ export default function PopupUpdateModal({ renderModal }: TPopupModalProps) {
       <div
         style={{
           cursor: 'pointer',
-          width: '100%',
-          display: 'flex'
+          margin: '4px 0'
         }}
         onClick={() => {
           setIsOpen(true);
         }}
         className={'text-xs md:text-sm'}
       >
-        <Edit className="mr-2 h-4 w-4" /> Update
+        <Edit className=" h-5 w-5" />
       </div>
       <Modal
         isOpen={isOpen}

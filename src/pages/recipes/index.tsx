@@ -1,10 +1,10 @@
 import PageHead from '@/components/shared/page-head';
 
 import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RecipesTable from '@/pages/recipes/components/recipes-table/index';
 import { useGetRecipes } from '@/pages/recipes/queries/queries';
+import { Toaster } from 'sonner';
 
 export default function RecipePage() {
   const [searchParams] = useSearchParams();
@@ -21,6 +21,7 @@ export default function RecipePage() {
   if (isLoading) {
     return (
       <div className="p-5">
+        <Toaster richColors position="top-right" />
         <DataTableSkeleton
           columnCount={10}
           filterableColumnCount={2}

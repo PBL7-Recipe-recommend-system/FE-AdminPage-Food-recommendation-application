@@ -3,31 +3,76 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRouter } from '@/routes/hooks';
-import { ChevronLeftIcon, ShareIcon } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
-import InterestChannel from './components/interest-channel';
+import { ChevronLeftIcon, Edit, KeyIcon, KeyRoundIcon, Save } from 'lucide-react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import StudentFeedTable from './components/student-feed-table';
-import { useGetUsers } from './queries/queries';
+import { useGetDetailedUser, useGetUsers } from './queries/queries';
+import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
+import InputMask from 'react-input-mask';
+import { validateDate } from '@/lib/utils';
+import { updateProfile } from '@/lib/users-api';
+import { toast } from 'sonner';
+import { Toaster } from 'sonner'
 export default function StudentDetailPage() {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('page') || 1);
   const pageLimit = Number(searchParams.get('limit') || 10);
+  const userIdParam = useParams().userId;
+  const userId = Number(userIdParam) || 0;
   // const offset = (page - 1) * pageLimit;
   const { data, isLoading } = useGetUsers(page, pageLimit);
+  const { data: detailedUser, isLoading: detailedLoading } =
+    useGetDetailedUser(userId);
   const users = data?.content;
   const totalUsers = data?.totalElements;
   const pageCount = Math.ceil(totalUsers / pageLimit);
   const router = useRouter();
-  if (isLoading) {
+  const [editing, setEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    birthday: detailedUser?.birthday,
+    email: detailedUser?.email,
+    gender: detailedUser?.gender,
+    name: detailedUser?.name
+  });
+  const [isDateValid, setIsDateValid] = useState(true);
+  useEffect(() => {
+    setFormData({
+      birthday: detailedUser?.birthday,
+      email: detailedUser?.email,
+      gender: detailedUser?.gender,
+      name: detailedUser?.name
+    });
+  }, [detailedUser]);
+
+  if (isLoading || detailedLoading) {
     return <h1>Loading!!!</h1>;
   }
+
+  const handleSubmitForm = async () => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    if (formData.birthday) {
+      formData.birthday = new Date(formData.birthday).toLocaleDateString(undefined, options).replace(/\//g, '-');
+    }
+    await updateProfile(formData);
+    toast.success('Profile updated successfully!');
+    console.log('formData', formData);
+  };
+
   return (
     <div className="p-10">
+      <Toaster richColors position="top-right" />
       <div className="flex items-center justify-between">
         <Heading title={'Personal Details'} />
         <div className="flex justify-end gap-3">
-
           <Button onClick={() => router.back()}>
             <ChevronLeftIcon className="h-4 w-4" />
             Back
@@ -39,23 +84,13 @@ export default function StudentDetailPage() {
           <Card className="bg-secondary  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between font-bold">
               <p className="text-xl"> Profile</p>
-              <Badge className="bg-green-600">Active</Badge>
+              <Badge className={`${detailedUser.isActive === true ? "bg-green-600" : "bg-red-600"} h-6`}>{detailedUser.isActive === true ? "Active" : "Locked"}</Badge>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrmY1DyC4CYWTK_Bhn6qQygwQJW0UQgXn-ew&usqp=CAU"
                 className="rounded-l-[40%] rounded-r-[40%] "
               />
-            </CardContent>
-          </Card>
-          <Card className="bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
-            <CardHeader className="pb-2 text-center font-bold">
-              About Me
-            </CardHeader>
-            <CardContent className="text-sm">
-              Hello! I'm Srikkath, your dedicated admin at Kutubi, ensuring a
-              seamless and enriching experience for teachers, students, and
-              parents. Feel free to reach out for any assistance or feedback
             </CardContent>
           </Card>
           <Card className="bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
@@ -70,42 +105,125 @@ export default function StudentDetailPage() {
         {/* contact information  */}
         <Card className=" col-span-1 bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm lg:col-span-3">
           <CardHeader className="text-xl font-bold">
-            Contact Information
+            <div className="flex flex-row justify-between">
+              <p>Contact Information</p>
+              {detailedUser.role === 'ADMIN' && (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setEditing(!editing);
+                    if (editing) {
+                      handleSubmitForm();
+                    }
+                  }}
+                >
+                  {editing ? <Save /> : <Edit />}
+                </div>
+              )}
+            </div>
           </CardHeader>
 
           <CardContent>
             <div className="grid grid-cols-2 gap-y-4">
               <div>
                 <p className="font-bold text-black">Name</p>
-                <p className="text-muted-foreground">John</p>
+                {editing ? (
+                  <Input
+                    className="w-[80%] text-muted-foreground"
+                    defaultValue={formData?.name}
+                    onChange={(event) =>
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        name: event.target.value
+                      }))
+                    }
+                  />
+                ) : (
+                  <p className="text-muted-foreground">{detailedUser?.name}</p>
+                )}
               </div>
-
 
               <div>
                 <p className="font-bold text-black">Gender</p>
-                <p className="text-muted-foreground">Male</p>
+                <Select defaultValue={detailedUser?.gender} disabled={!editing}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Choose your gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="MALE">MALE</SelectItem>
+                    <SelectItem value="FEMALE">FEMALE</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-
 
               <div>
                 <p className="font-bold text-black">Email</p>
-                <p className="text-muted-foreground">ElonMusk@x.com</p>
+                {editing ? (
+                  <Input
+                    className="w-[80%] text-muted-foreground"
+                    defaultValue={formData?.email}
+                    onChange={(event) =>
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        email: event.target.value
+                      }))
+                    }
+                  />
+                ) : (
+                  <p className="text-muted-foreground">{detailedUser?.email}</p>
+                )}
               </div>
 
               <div>
                 <p className="font-bold text-black">Date of Birth</p>
-                <p className="text-muted-foreground">26/4/1989</p>
+                {editing ? (
+                  <>
+                    <InputMask
+                      mask="9999-99-99"
+                      defaultValue={formData?.birthday}
+                      onChange={(event) => {
+                        const dateStr = event.target.value;
+                        if (validateDate(dateStr)) {
+                          setIsDateValid(true);
+                          setFormData((prevState) => ({
+                            ...prevState,
+                            birthday: dateStr
+                          }));
+                        } else {
+                          setIsDateValid(false);
+                        }
+                      }}
+                    >
+                      {(inputProps) => (
+                        <Input
+                          {...inputProps}
+                          className={`w-[80%] text-muted-foreground ${!isDateValid ? 'border-red-500' : ''}`}
+                          defaultValue={formData?.birthday}
+                        />
+                      )}
+                    </InputMask>
+                    {!isDateValid && (
+                      <p className="text-red-500">
+                        Invalid date, date must be yyyy-MM-dd format
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-muted-foreground">
+                    {detailedUser?.birthday}
+                  </p>
+                )}
               </div>
-
+              <div className='mt-2'>
+                <Button onClick={() => router.back()}>
+                  <KeyRoundIcon className="h-4 w-4 mr-4 " />
+                  Change password
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
-      {/* <div className="flex items-center justify-center">
-        <InterestChannel title="Interest" />
-        <InterestChannel title="Interest" />
-        <InterestChannel title="Interest" />
-      </div> */}
       <StudentFeedTable
         users={users}
         page={page}

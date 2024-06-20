@@ -7,13 +7,22 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { logout } from '@/lib/api';
 import { useNavigate } from 'react-router-dom';
+import { useRouter } from '@/routes/hooks';
+import { me } from '@/lib/users-api';
 export default function UserNav() {
   const navigate = useNavigate();
+  const router = useRouter()
+
+  const handleNavigateDetail = async () => {
+    const res = await me();
+    const id = res.data.id;
+    router.push(`/account/details/${id}`)
+    console.log(res.data);
+  }
 
   const handleLogout = async () => {
     await logout();
@@ -45,24 +54,13 @@ export default function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleNavigateDetail} style={{ cursor: 'pointer' }}>
             Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} style={{ cursor: 'pointer' }}>
           Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

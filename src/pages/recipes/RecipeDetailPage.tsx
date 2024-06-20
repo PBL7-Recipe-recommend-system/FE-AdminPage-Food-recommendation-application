@@ -1,10 +1,9 @@
 import Heading from '@/components/shared/heading';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRouter } from '@/routes/hooks';
-import { ChevronLeftIcon, Edit, Save, ShareIcon } from 'lucide-react';
+import { ChevronLeftIcon, Edit, Save } from 'lucide-react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
@@ -17,7 +16,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  formatDate,
   getImage,
   getTimeFromData,
   handleChangeTotalTime,
@@ -34,6 +32,7 @@ import {
 } from './queries/queries';
 import { updateDetailedRecipe } from '@/lib/recipes-api';
 import { useQueryClient } from '@tanstack/react-query';
+import { Toaster, toast } from 'sonner';
 export default function RecipeDetailPage() {
   const [searchParams] = useSearchParams();
   const recipeIdParam = useParams().recipeId;
@@ -108,39 +107,32 @@ export default function RecipeDetailPage() {
     });
   }, [detailsRecipe]);
 
-  useEffect(() => {
-    console.log(overviewFormData.prepTime, overviewFormData.cookTime);
-    console.log(overviewFormData.totalTime);
-  }, [overviewFormData]);
-
   if (ingredientLoading || detailLoading || instructionsLoading) {
     return <h1>Loading!!!</h1>;
   }
 
   const handleSubmitOverviewForm = async () => {
-    const res = await updateDetailedRecipe(recipeId, overviewFormData);
-    console.log(res)
+    await updateDetailedRecipe(recipeId, overviewFormData);
     queryClient.invalidateQueries({ queryKey: ['detailRecipes', recipeId] });
+    toast.success('Recipe updated successfully');
   }
 
   const handleSubmitNutritionForm = async () => {
-    const res = await updateDetailedRecipe(recipeId, nutritionFormData);
-    console.log(res)
+    await updateDetailedRecipe(recipeId, nutritionFormData);
     queryClient.invalidateQueries({ queryKey: ['detailRecipes', recipeId] });
+    toast.success('Recipe updated successfully');
+
   }
 
 
 
   return (
     <div className="p-10">
+      <Toaster richColors position="top-right" />
       <div className="flex items-center justify-between">
-        <Heading title={'Recipe Details'} />
+        <Heading title={detailsRecipe?.name} />
         <div className="flex justify-end gap-3">
-          <Button>
-            <ShareIcon className="h-4 w-4" />
-            Share
-          </Button>
-          <Button onClick={() => router.back()}>
+          <Button onClick={() => router.push("/recipe")}>
             <ChevronLeftIcon className="h-4 w-4" />
             Back
           </Button>
@@ -151,17 +143,31 @@ export default function RecipeDetailPage() {
           <Card className="bg-secondary  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between font-bold">
               <p className="text-xl"> Images</p>
-              <Badge className="bg-green-600">Active</Badge>
+
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               <Carousel>
                 <CarouselContent>
-                  {images &&
+                  {/* {images &&
                     images.map((image, index) => (
                       <CarouselItem>
-                        <img src={image} className="rounded-sm " />
+                        <img src={image} className="rounded-sm" />
                       </CarouselItem>
-                    ))}
+                    ))} */}
+
+                  {images &&
+                    images.map((image, index) => (
+                      index === images.length - 1 ? (
+                        <CarouselItem>
+                          <Input id="picture" type="file" className='w-full justify-center items-center' />
+                        </CarouselItem>
+                      ) : (
+                        <CarouselItem>
+                          <img src={image} className="rounded-sm " />
+                        </CarouselItem>
+                      )
+                    ))
+                  }
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
@@ -191,14 +197,7 @@ export default function RecipeDetailPage() {
               )}
             </CardContent>
           </Card>
-          <Card className="bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
-            <CardHeader className="pb-2 text-center font-bold">
-              Last Login
-            </CardHeader>
-            <CardContent className="text-center text-sm">
-              12 Aug 2022 9:30 AM
-            </CardContent>
-          </Card>
+
         </div>
 
         <div className="col-span-1 overflow-hidden bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm lg:col-span-3">

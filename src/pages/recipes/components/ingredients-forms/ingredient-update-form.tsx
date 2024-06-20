@@ -20,8 +20,7 @@ type IngredientsUpdateFormProps = {
 
 const ingredientsFormSchema = z.object({
   name: z.string().min(1, { message: 'name is required' }),
-  quantity: z.string().min(1, { message: 'quantity is required' }),
-  unit: z.string().min(1, { message: 'username is required' })
+  quantity: z.string().min(1, { message: 'quantity is required' })
 });
 
 type IngredientsFormSchemaType = z.infer<typeof ingredientsFormSchema>;
@@ -35,12 +34,12 @@ const IngredientsUpdateForm = ({
     resolver: zodResolver(ingredientsFormSchema),
     defaultValues: {
       name: data?.name,
-      quantity: '0',
-      unit: data?.unit
+      quantity: data?.quantity.toString(),
     }
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: IngredientsFormSchemaType) => {
+    console.log('values', values);
     onUpdateIngredient(values);
     modalClose();
   };
@@ -48,7 +47,7 @@ const IngredientsUpdateForm = ({
   return (
     <div className="px-2">
       <Heading
-        title={'Add New Ingredients'}
+        title={'Edit Ingredients'}
         description={'Welcome to the Ingredients creation page!'}
         className="space-y-2 py-4 text-center"
       />
@@ -88,22 +87,7 @@ const IngredientsUpdateForm = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="unit"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your unit"
-                      {...field}
-                      className=" px-4 py-6 "
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
           </div>
 
           <div className="flex items-center justify-center gap-4">
@@ -117,7 +101,7 @@ const IngredientsUpdateForm = ({
               Cancel
             </Button>
             <Button type="submit" className="rounded-full" size="lg">
-              Create Student
+              Update
             </Button>
           </div>
         </form>

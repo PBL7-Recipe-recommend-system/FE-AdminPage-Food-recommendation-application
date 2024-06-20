@@ -1,14 +1,8 @@
 import { NavItem } from '@/types';
 
-export const COMPANY_PATH = '192.168.1.36';
+export const COMPANY_PATH = 'localhost';
 
 export const navItems: NavItem[] = [
-  // {
-  //   title: 'Dashboard',
-  //   href: '/',
-  //   icon: 'dashboard',
-  //   label: 'Dashboard'
-  // },
   {
     title: 'Account',
     href: '/account',
@@ -76,6 +70,7 @@ export type Account = {
   gender: string;
   birthday: string;
   avatar: string;
+  isActive: boolean;
 };
 
 export type Recipe = {

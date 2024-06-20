@@ -21,7 +21,7 @@ type InstructionUpdateFormProps = {
 };
 
 const instructionFormSchema = z.object({
-  step: z.number().min(1, { message: 'name is required' }),
+  step: z.number().min(1, { message: 'step is required' }),
   instruction: z.string().min(1, { message: 'instruction is required' })
 });
 
@@ -32,7 +32,7 @@ const InstructionUpdateForm = ({
   data,
   onUpdateInstruction
 }: InstructionUpdateFormProps) => {
-  const form = useForm<InstructionFormSchemaType>({
+  const form = useForm < InstructionFormSchemaType > ({
     resolver: zodResolver(instructionFormSchema),
     defaultValues: {
       step: data?.step,
@@ -40,15 +40,14 @@ const InstructionUpdateForm = ({
     }
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: InstructionFormSchemaType) => {
     onUpdateInstruction(values);
     modalClose();
   };
   return (
     <div className="px-2">
       <Heading
-        title={'Add New Ingredients'}
-        description={'Welcome to the Ingredients creation page!'}
+        title={'Edit Instructions'}
         className="space-y-2 py-4 text-center"
       />
       <Form {...form}>
@@ -59,6 +58,7 @@ const InstructionUpdateForm = ({
               name="step"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Step</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter step"
@@ -78,7 +78,7 @@ const InstructionUpdateForm = ({
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Textarea {...field} className=" px-4 py-6 " />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
