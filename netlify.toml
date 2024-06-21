@@ -1,9 +1,9 @@
 [build]
-    command = "CI = npm run build"
-    publish = "src"
-    base = "/"
+  command = "CI=true vite build"
+  publish = "src"
+  base = "/"
 
 [[redirects]]
-    from = "/*"
-    to = "/index.html"
-    status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
