@@ -1,6 +1,6 @@
 import { NavItem } from '@/types';
 
-export const COMPANY_PATH = 'localhost';
+export const COMPANY_PATH = '52.53.95.37';
 
 export const navItems: NavItem[] = [
   {
