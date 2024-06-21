@@ -1,8 +1,8 @@
 import PaginationSection from '@/components/shared/pagination-section';
+import { useGetUsers } from '@/pages/students/queries/queries';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useGetUsers } from '../queries/queries';
 
 const InterestChannel = ({ title }: { title: string }) => {
   const [searchParams] = useSearchParams();
@@ -13,7 +13,7 @@ const InterestChannel = ({ title }: { title: string }) => {
   // const offset = (currentPage - 1) * pageLimit;
 
   // const offset = (page - 1) * pageLimit;
-  const { data, isLoading } = useGetUsers(page, pageLimit);
+  const { data } = useGetUsers(page, pageLimit);
   const users = data?.content;
   console.log('users', users);
 

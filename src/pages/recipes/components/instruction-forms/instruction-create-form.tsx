@@ -38,7 +38,7 @@ const InstructionCreateForm = ({ modalClose }: { modalClose: () => void }) => {
 
   const onSubmit = async (values: InstructionFormSchemaType) => {
     console.log(values);
-    const res = await addNewInstruction(recipeId, values);
+    await addNewInstruction(recipeId, values);
     queryClient.invalidateQueries({ queryKey: ['instructions', recipeId] });
     modalClose();
   };

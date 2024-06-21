@@ -15,8 +15,8 @@ export default function IngredientsTable({
     ingredients,
     pageCount
 }: TRecipesTableProps) {
-    const [isSearching, setIsSearching] = useState(false);
-    const [dataSearch, setDataSearch] = useState([]);
+    const [isSearching] = useState(false);
+    const [dataSearch] = useState([]);
     return (
         <>
             <Toaster richColors position="top-right" />
