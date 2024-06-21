@@ -7,10 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Edit, MoreHorizontal, Trash } from 'lucide-react';
-import { useRouter } from '@/routes/hooks';
-import { useState } from 'react';
 import { Recipe } from '@/constants/data';
+import { Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { useState } from 'react';
 
 interface CellActionProps {
   data: Recipe;
@@ -19,7 +18,6 @@ interface CellActionProps {
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading] = useState(false);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
 
   const onConfirm = async () => { };
 

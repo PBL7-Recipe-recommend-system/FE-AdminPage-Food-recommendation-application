@@ -1,5 +1,5 @@
+import { getDetailedUser, getUsers } from '@/lib/users-api';
 import { useQuery } from '@tanstack/react-query';
-import { getUsers, getDetailedUser } from '@/lib/users-api';
 
 export const useGetUsers = (page, size) => {
   return useQuery({

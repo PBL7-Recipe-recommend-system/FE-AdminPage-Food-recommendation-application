@@ -7,15 +7,15 @@ import {
     FormItem,
     FormMessage
 } from '@/components/ui/form';
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from '@/components/ui/input';
+import { addNewInstruction } from '@/lib/instructions-api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { z } from 'zod';
-import { addNewInstruction } from '@/lib/instructions-api';
 
 
 const changePasswordFormSchema = z

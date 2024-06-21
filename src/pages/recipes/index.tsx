@@ -1,9 +1,9 @@
 import PageHead from '@/components/shared/page-head';
 
 import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
-import { useSearchParams } from 'react-router-dom';
 import RecipesTable from '@/pages/recipes/components/recipes-table/index';
 import { useGetRecipes } from '@/pages/recipes/queries/queries';
+import { useSearchParams } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
 export default function RecipePage() {

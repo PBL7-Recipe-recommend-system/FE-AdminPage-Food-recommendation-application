@@ -1,5 +1,5 @@
 import { Modal } from '@/components/ui/modal';
-import { Edit, Plus } from 'lucide-react';
+import { Edit } from 'lucide-react';
 import { useState } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 

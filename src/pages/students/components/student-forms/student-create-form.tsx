@@ -1,4 +1,3 @@
-import FileUpload from '@/components/shared/fileupload';
 import Heading from '@/components/shared/heading';
 import { Button } from '@/components/ui/button';
 import {
@@ -6,9 +5,9 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -16,16 +15,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Toaster, toast } from 'sonner'
-import { Input } from '@/components/ui/input';
 import { addAccount } from '@/lib/users-api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
-const maxFileSize = 1 * 1024 * 1024 * 1024;
 const studentFormSchema = z
   .object({
     name: z.string().min(1, { message: 'firstname is required' }),

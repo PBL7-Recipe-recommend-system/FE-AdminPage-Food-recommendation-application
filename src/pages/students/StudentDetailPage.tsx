@@ -2,12 +2,6 @@ import Heading from '@/components/shared/heading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useRouter } from '@/routes/hooks';
-import { ChevronLeftIcon, Edit, KeyIcon, KeyRoundIcon, Save } from 'lucide-react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import StudentFeedTable from './components/student-feed-table';
-import { useGetDetailedUser, useGetUsers } from './queries/queries';
-import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -16,12 +10,17 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { useRouter } from '@/routes/hooks';
+import { ChevronLeftIcon, Edit, KeyRoundIcon, Save } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
+import StudentFeedTable from './components/student-feed-table';
+import { useGetDetailedUser, useGetUsers } from './queries/queries';
 
-import InputMask from 'react-input-mask';
-import { validateDate } from '@/lib/utils';
 import { updateProfile } from '@/lib/users-api';
-import { toast } from 'sonner';
-import { Toaster } from 'sonner'
+import { validateDate } from '@/lib/utils';
+import InputMask from 'react-input-mask';
+import { Toaster, toast } from 'sonner';
 export default function StudentDetailPage() {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('page') || 1);
@@ -64,7 +63,6 @@ export default function StudentDetailPage() {
     }
     await updateProfile(formData);
     toast.success('Profile updated successfully!');
-    console.log('formData', formData);
   };
 
   return (

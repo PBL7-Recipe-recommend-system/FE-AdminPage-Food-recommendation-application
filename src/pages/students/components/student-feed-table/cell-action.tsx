@@ -8,8 +8,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Account } from '@/constants/data';
-import { Edit, LockKeyhole, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from '@/routes/hooks';
+import { Edit, LockKeyhole, MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
 
 interface CellActionProps {

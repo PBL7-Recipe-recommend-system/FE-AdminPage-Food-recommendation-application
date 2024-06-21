@@ -1,8 +1,8 @@
-import { useSearchParams } from 'react-router-dom';
-import { useGetUsers } from '../queries/queries';
-import { useState } from 'react';
 import PaginationSection from '@/components/shared/pagination-section';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useGetUsers } from '../queries/queries';
 
 const InterestChannel = ({ title }: { title: string }) => {
   const [searchParams] = useSearchParams();

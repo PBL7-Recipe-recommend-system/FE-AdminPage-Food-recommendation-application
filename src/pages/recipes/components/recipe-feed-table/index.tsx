@@ -1,6 +1,6 @@
 import DataTable from '@/components/shared/data-table';
-import { columns } from './columns';
 import RecipeTableActions from '@/pages/recipes/components/recipe-feed-table/recipe-table-action';
+import { columns } from './columns';
 
 
 type TRecipesTableProps = {

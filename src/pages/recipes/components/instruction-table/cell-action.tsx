@@ -1,18 +1,10 @@
 import { AlertModal } from '@/components/shared/alert-modal';
 import PopupUpdateModal from '@/components/shared/popup-edit-modal';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
 import { Instruction } from '@/constants/data';
 import { deleteInstruction, updateInstruction } from '@/lib/instructions-api';
 import InstructionUpdateForm from '@/pages/recipes/components/instruction-forms/instruction-update-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { MoreHorizontal, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';

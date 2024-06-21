@@ -1,8 +1,8 @@
 import DataTable from '@/components/shared/data-table';
-import { columns } from './columns';
 import IngredientTableActions from '@/pages/recipes/components/ingredient-table/ingredient-table-action';
 import { useState } from 'react';
 import { Toaster } from 'sonner';
+import { columns } from './columns';
 
 type TRecipesTableProps = {
     ingredients: any;

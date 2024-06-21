@@ -8,12 +8,12 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-import { Edit, LockKeyhole, MoreHorizontal, Trash } from 'lucide-react';
-import { useRouter } from '@/routes/hooks';
-import { useEffect, useState } from 'react';
 import { Account } from '@/constants/data';
 import { lockProfile } from '@/lib/users-api';
+import { useRouter } from '@/routes/hooks';
 import { useQueryClient } from '@tanstack/react-query';
+import { Edit, LockKeyhole, MoreHorizontal } from 'lucide-react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 

@@ -1,8 +1,8 @@
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from '@/components/ui/checkbox';
+import { Account } from '@/constants/data';
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
-import { Account } from '@/constants/data';
-import { Badge } from "@/components/ui/badge"
 
 export const columns: ColumnDef<Account>[] = [
   {

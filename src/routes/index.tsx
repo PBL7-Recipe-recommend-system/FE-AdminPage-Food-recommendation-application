@@ -1,8 +1,6 @@
 import NotFound from '@/pages/not-found';
-import { Suspense, lazy } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
+import { Navigate, Outlet, useNavigate, useRoutes } from 'react-router-dom';
 const DashboardLayout = lazy(
   () => import('@/components/layout/dashboard-layout')
 );

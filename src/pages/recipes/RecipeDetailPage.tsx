@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/carousel';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { updateDetailedRecipe } from '@/lib/recipes-api';
 import {
   getImage,
   getTimeFromData,
@@ -24,15 +25,14 @@ import {
 } from '@/lib/utils';
 import IngredientTable from '@/pages/recipes/components/ingredient-table';
 import InstructionTable from '@/pages/recipes/components/instruction-table';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { Toaster, toast } from 'sonner';
 import {
   useGetDetailIngredients,
   useGetDetailInstructions,
   useGetDetailRecipes
 } from './queries/queries';
-import { updateDetailedRecipe } from '@/lib/recipes-api';
-import { useQueryClient } from '@tanstack/react-query';
-import { Toaster, toast } from 'sonner';
 export default function RecipeDetailPage() {
   const [searchParams] = useSearchParams();
   const recipeIdParam = useParams().recipeId;
