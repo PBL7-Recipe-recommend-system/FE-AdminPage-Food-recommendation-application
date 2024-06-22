@@ -1,9 +1,9 @@
 import { COMPANY_PATH } from '@/constants/data';
 import axios from 'axios';
 
-const RECIPE_PATH_LOCAL = `http://${COMPANY_PATH}:8082/api/v1/recipes`;
-const INGREDIENT_PATH_LOCAL = `http://${COMPANY_PATH}:8082/api/v1/ingredients/recipe`;
-const INSTRUCTION_PATH_LOCAL = `http://${COMPANY_PATH}:8082/api/v1/instruction`;
+const RECIPE_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/recipes`;
+const INGREDIENT_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/ingredients/recipe`;
+const INSTRUCTION_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/instruction`;
 
 export async function getRecipes(page: number, size: number) {
   const token = localStorage.getItem('accessToken');

@@ -1,7 +1,7 @@
 import { COMPANY_PATH } from '@/constants/data';
 import axios from 'axios';
 
-const USER_PATH_LOCAL = `http://${COMPANY_PATH}:8082/api/v1/admin/users`;
+const USER_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/admin/users`;
 export async function getUsers(page: number, size: number) {
   const token = localStorage.getItem('accessToken');
 
@@ -27,10 +27,7 @@ export async function me() {
     headers: { Authorization: `Bearer ${token}` }
   };
   try {
-    const res = await axios.get(
-      `http://${COMPANY_PATH}:8082/api/v1/users/me`,
-      config
-    );
+    const res = await axios.get(`${COMPANY_PATH}:8082/api/v1/users/me`, config);
     return res.data;
   } catch (error) {
     return error;
@@ -88,7 +85,7 @@ export async function updateProfile(data) {
   };
   try {
     const res = await axios.put(
-      `http://localhost:8082/api/v1/users/me`,
+      `https://localhost:8082/api/v1/users/me`,
       data,
       config
     );
