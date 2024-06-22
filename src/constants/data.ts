@@ -1,6 +1,6 @@
 import { NavItem } from '@/types';
 
-export const COMPANY_PATH = 'https://52.53.95.37';
+export const COMPANY_PATH = 'https://fra-app.site';
 
 export const navItems: NavItem[] = [
   {
