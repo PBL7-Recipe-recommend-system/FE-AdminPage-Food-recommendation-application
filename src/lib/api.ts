@@ -11,8 +11,8 @@ import axios from 'axios';
 //     }
 // }
 
-const AUTH_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/auth`;
-const LOGOUT_PATH_LOCAL = `${COMPANY_PATH}:8082/api/logout`;
+const AUTH_PATH_LOCAL = `${COMPANY_PATH}/api/v1/auth`;
+const LOGOUT_PATH_LOCAL = `${COMPANY_PATH}/api/logout`;
 
 export async function getStudents(
   offset: number,

@@ -1,6 +1,6 @@
 import { COMPANY_PATH } from '@/constants/data';
 import axios from 'axios';
-const INSTRUCTION_PATH_LOCAL = `${COMPANY_PATH}:8082/api/v1/instruction`;
+const INSTRUCTION_PATH_LOCAL = `${COMPANY_PATH}/api/v1/instruction`;
 
 export async function addNewInstruction(recipeId: number, data) {
   const token = localStorage.getItem('accessToken');
