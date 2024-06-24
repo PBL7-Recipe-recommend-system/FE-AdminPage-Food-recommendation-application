@@ -15,12 +15,7 @@ export default function StudentPage() {
   const totalUsers = data?.totalElements;
   const pageCount = Math.ceil(totalUsers / pageLimit);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log('fetching users', users);
-    };
-    fetchData();
-  }, [users])
+
 
   if (isLoading) {
     return (
@@ -36,7 +31,7 @@ export default function StudentPage() {
 
   return (
     <div className="p-5">
-      <PageHead title="User Management | App" />
+      <PageHead title="User Management | FRA" />
       <StudentsTable
         users={users}
         page={page}

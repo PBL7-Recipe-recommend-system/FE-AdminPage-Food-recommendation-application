@@ -33,7 +33,7 @@ export default function RecipePage() {
 
   return (
     <div className="p-5">
-      <PageHead title="User Management | App" />
+      <PageHead title="Recipe Management | FRA" />
       <RecipesTable
         users={users}
         page={page}
