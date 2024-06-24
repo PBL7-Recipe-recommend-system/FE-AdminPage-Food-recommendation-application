@@ -1,6 +1,5 @@
 import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
 import PageHead from '@/components/shared/page-head';
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import StudentsTable from './components/students-table';
 import { useGetUsers } from './queries/queries';
