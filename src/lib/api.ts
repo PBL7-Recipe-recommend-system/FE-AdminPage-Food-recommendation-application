@@ -1,35 +1,7 @@
 import { COMPANY_PATH } from '@/constants/data';
 import axios from 'axios';
-// ---------------------------- Student API ------------------------------------------------- //
-// export async function resendEmail(email: string) {
-//     try {
-//       const res = await axios.post("/auth/register/resend-email/", { email });
-//       return res.data;
-//     } catch (error) {
-//       console.log(error);
-//       return error;
-//     }
-// }
-
 const AUTH_PATH_LOCAL = `${COMPANY_PATH}/api/v1/auth`;
-const LOGOUT_PATH_LOCAL = `${COMPANY_PATH}/api/logout`;
-
-export async function getStudents(
-  offset: number,
-  pageLimit: number,
-  country: string
-) {
-  try {
-    const res = await axios.get(
-      `https://api.slingacademy.com/v1/sample-data/users?offset=${offset}&limit=${pageLimit}` +
-        (country ? `&search=${country}` : '')
-    );
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-}
+const LOGOUT_PATH_LOCAL = `https://fra-app.site/api/v1/auth/logout`;
 
 export async function login(param) {
   try {
@@ -44,17 +16,17 @@ export async function login(param) {
 }
 
 export async function logout() {
+  const token = localStorage.getItem('accessToken');
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
   try {
-    const token = localStorage.getItem('accessToken');
-    const config = {
-      headers: { Authorization: `Bearer ${token}` }
-    };
-    const res = await axios.post(`${LOGOUT_PATH_LOCAL}`, config);
+    const data = {};
+    const res = await axios.post(`${LOGOUT_PATH_LOCAL}`, data, config);
     localStorage.removeItem('accessToken');
     return res.data;
   } catch (error) {
     localStorage.removeItem('accessToken');
-
     return error;
   }
 }

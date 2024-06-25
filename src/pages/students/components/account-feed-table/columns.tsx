@@ -1,9 +1,8 @@
-import { Checkbox } from '@/components/ui/checkbox';
-import { Recipe } from '@/constants/data';
+import { Account } from '@/constants/data';
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 
-export const columns: ColumnDef<Recipe>[] = [
+export const columns: ColumnDef<Account>[] = [
   // {
   //   id: 'select',
   //   header: ({ table }) => (
@@ -28,16 +27,16 @@ export const columns: ColumnDef<Recipe>[] = [
     header: 'NAME'
   },
   {
-    accessorKey: 'author_name',
-    header: 'AUTHOR NAME'
+    accessorKey: 'birthday',
+    header: 'DATE OF BIRTH'
   },
   {
-    accessorKey: 'total_time',
-    header: 'TOTAL TIME'
+    accessorKey: 'email',
+    header: 'EMAIL'
   },
   {
-    accessorKey: 'calories',
-    header: 'CALORIES'
+    accessorKey: 'gender',
+    header: 'GENDER'
   },
   {
     id: 'actions',

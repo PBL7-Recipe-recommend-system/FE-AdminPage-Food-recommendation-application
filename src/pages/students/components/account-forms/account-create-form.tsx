@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-const studentFormSchema = z
+const accountFormSchema = z
   .object({
     name: z.string().min(1, { message: 'firstname is required' }),
     gender: z.string(),
@@ -49,18 +49,18 @@ const studentFormSchema = z
     path: ['confirmPassword']
   });
 
-type StudentFormSchemaType = z.infer<typeof studentFormSchema>;
+type AccountFormSchemaType = z.infer<typeof accountFormSchema>;
 
-const StudentCreateForm = ({ modalClose }: { modalClose: () => void }) => {
+const AccountCreateForm = ({ modalClose }: { modalClose: () => void }) => {
   const queryClient = useQueryClient();
 
 
-  const form = useForm<StudentFormSchemaType>({
-    resolver: zodResolver(studentFormSchema),
+  const form = useForm<AccountFormSchemaType>({
+    resolver: zodResolver(accountFormSchema),
     defaultValues: {}
   });
 
-  const onSubmit = async (values: StudentFormSchemaType) => {
+  const onSubmit = async (values: AccountFormSchemaType) => {
     try {
       const res = await addAccount(values);
       console.log('res', res);
@@ -220,4 +220,4 @@ const StudentCreateForm = ({ modalClose }: { modalClose: () => void }) => {
   );
 };
 
-export default StudentCreateForm;
+export default AccountCreateForm;

@@ -14,9 +14,9 @@ import { useRouter } from '@/routes/hooks';
 import { ChevronLeftIcon, Edit, KeyRoundIcon, Save } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import StudentFeedTable from './components/student-feed-table';
+import StudentFeedTable from './components/account-feed-table';
 import { useGetDetailedUser, useGetUsers } from './queries/queries';
-
+import defaultAvt from '../../assets/avatar.png'
 import { updateProfile } from '@/lib/users-api';
 import { validateDate } from '@/lib/utils';
 import InputMask from 'react-input-mask';
@@ -86,17 +86,9 @@ export default function StudentDetailPage() {
             </CardHeader>
             <CardContent className="flex items-center justify-center">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrmY1DyC4CYWTK_Bhn6qQygwQJW0UQgXn-ew&usqp=CAU"
+                src={detailedUser.avatar || defaultAvt}
                 className="rounded-l-[40%] rounded-r-[40%] "
               />
-            </CardContent>
-          </Card>
-          <Card className="bg-secondary shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] drop-shadow-sm">
-            <CardHeader className="pb-2 text-center font-bold">
-              Last Login
-            </CardHeader>
-            <CardContent className="text-center text-sm">
-              12 Aug 2022 9:30 AM
             </CardContent>
           </Card>
         </div>

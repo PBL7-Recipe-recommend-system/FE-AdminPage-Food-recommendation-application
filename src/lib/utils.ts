@@ -66,3 +66,16 @@ export function validateDate(dateStr) {
   const parsedDate = parse(dateStr, 'yyyy-MM-dd', new Date());
   return isValid(parsedDate);
 }
+
+import { decode } from 'jsonwebtoken';
+
+// export function decodeToken() {
+//   const token = localStorage.getItem('accessToken');
+//   if (token === null) {
+//     console.log('No token found');
+//     return null;
+//   }
+//   const decoded = decode(token);
+//   console.log(decoded);
+//   return decoded;
+// }
