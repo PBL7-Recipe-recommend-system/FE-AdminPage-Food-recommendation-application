@@ -1,5 +1,4 @@
 import PopupModal from '@/components/shared/popup-modal';
-import TableSearchInput from '@/components/shared/table-search-input';
 import StudentCreateForm from '../recipe-forms/recipe-create-form';
 
 export default function RecipeTableActions() {

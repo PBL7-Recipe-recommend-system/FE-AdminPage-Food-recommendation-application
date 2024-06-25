@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
-import { Input } from '../ui/input';
-import { useDebounce } from 'use-debounce';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Input } from '../ui/input';
 
 export default function TableSearchInput({
   placeholder,
@@ -9,7 +8,7 @@ export default function TableSearchInput({
   placeholder?: string;
   handleChangeText?: (text) => void;
 }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const country = searchParams.get('search') || '';
   const [searchTerm, setSearchTerm] = React.useState(country);
   // debounce the search input
