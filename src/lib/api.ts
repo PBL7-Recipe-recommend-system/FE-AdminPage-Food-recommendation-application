@@ -1,4 +1,5 @@
 import { COMPANY_PATH } from '@/constants/data';
+import { me } from '@/lib/users-api';
 import axios from 'axios';
 const AUTH_PATH_LOCAL = `${COMPANY_PATH}/api/v1/auth`;
 const LOGOUT_PATH_LOCAL = `https://fra-app.site/api/v1/auth/logout`;
@@ -8,6 +9,7 @@ export async function login(param) {
     const res = await axios.post(`${AUTH_PATH_LOCAL}/authenticate`, param);
     if (res.data.data.role === 'ADMIN') {
       localStorage.setItem('accessToken', res.data.data.accessToken);
+      await me();
     }
     return res.data;
   } catch (error) {

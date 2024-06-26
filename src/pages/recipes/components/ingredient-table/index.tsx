@@ -1,7 +1,6 @@
 import DataTable from '@/components/shared/data-table';
 import IngredientTableActions from '@/pages/recipes/components/ingredient-table/ingredient-table-action';
 import { useState } from 'react';
-import { Toaster } from 'sonner';
 import { columns } from './columns';
 
 type TRecipesTableProps = {
@@ -19,7 +18,6 @@ export default function IngredientsTable({
     const [dataSearch] = useState([]);
     return (
         <>
-            <Toaster richColors position="top-right" />
             <IngredientTableActions />
             {ingredients && (
                 <DataTable columns={columns} data={isSearching ? dataSearch : ingredients} pageCount={pageCount} showRowPerPage={false} />

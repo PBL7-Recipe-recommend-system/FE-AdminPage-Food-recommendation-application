@@ -28,6 +28,7 @@ export async function me() {
   };
   try {
     const res = await axios.get(`${COMPANY_PATH}/api/v1/users/me`, config);
+    localStorage.setItem('userId', JSON.stringify(res.data.data.id));
     return res.data;
   } catch (error) {
     return error;
@@ -85,7 +86,7 @@ export async function updateProfile(data) {
   };
   try {
     const res = await axios.put(
-      `https://localhost/api/v1/users/me`,
+      `https://fra-app.site/api/v1/users/me`,
       data,
       config
     );

@@ -6,16 +6,15 @@ const DashboardLayout = lazy(
 );
 const SignInPage = lazy(() => import('@/pages/auth/signin'));
 const DashboardPage = lazy(() => import('@/pages/dashboard'));
-const StudentPage = lazy(() => import('@/pages/students'));
-const StudentDetailPage = lazy(
-  () => import('@/pages/students/StudentDetailPage')
+const AccountsPage = lazy(() => import('@/pages/accounts'));
+const AccountDetailPage = lazy(
+  () => import('@/pages/accounts/AccountDetailPage')
 );
 const RecipePage = lazy(() => import('@/pages/recipes'));
 
 const RecipeDetailPage = lazy(
   () => import('@/pages/recipes/RecipeDetailPage')
 );
-// ----------------------------------------------------------------------
 
 export default function AppRouter() {
   const navigate = useNavigate();
@@ -42,11 +41,11 @@ export default function AppRouter() {
         },
         {
           path: 'account',
-          element: <StudentPage />
+          element: <AccountsPage />
         },
         {
           path: 'account/details/:userId',
-          element: <StudentDetailPage />
+          element: <AccountDetailPage />
         },
         {
           path: 'recipe',

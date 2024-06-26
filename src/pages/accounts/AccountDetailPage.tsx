@@ -10,24 +10,23 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { useRouter } from '@/routes/hooks';
-import { ChevronLeftIcon, Edit, KeyRoundIcon, Save } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import StudentFeedTable from './components/account-feed-table';
-import { useGetDetailedUser, useGetUsers } from './queries/queries';
-import defaultAvt from '../../assets/avatar.png'
 import { updateProfile } from '@/lib/users-api';
 import { validateDate } from '@/lib/utils';
+import { useRouter } from '@/routes/hooks';
+import { ChevronLeftIcon, Edit, Save } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import InputMask from 'react-input-mask';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
-export default function StudentDetailPage() {
+import defaultAvt from '../../assets/avatar.png';
+import StudentFeedTable from './components/account-feed-table';
+import { useGetDetailedUser, useGetUsers } from './queries/queries';
+export default function AccountDetailPage() {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('page') || 1);
   const pageLimit = Number(searchParams.get('limit') || 10);
   const userIdParam = useParams().userId;
   const userId = Number(userIdParam) || 0;
-  // const offset = (page - 1) * pageLimit;
   const { data, isLoading } = useGetUsers(page, pageLimit);
   const { data: detailedUser, isLoading: detailedLoading } =
     useGetDetailedUser(userId);
@@ -42,6 +41,7 @@ export default function StudentDetailPage() {
     gender: detailedUser?.gender,
     name: detailedUser?.name
   });
+  const ownId = localStorage.getItem('userId');
   const [isDateValid, setIsDateValid] = useState(true);
   useEffect(() => {
     setFormData({
@@ -61,6 +61,7 @@ export default function StudentDetailPage() {
     if (formData.birthday) {
       formData.birthday = new Date(formData.birthday).toLocaleDateString(undefined, options).replace(/\//g, '-');
     }
+    console.log(formData);
     await updateProfile(formData);
     toast.success('Profile updated successfully!');
   };
@@ -71,7 +72,7 @@ export default function StudentDetailPage() {
       <div className="flex items-center justify-between">
         <Heading title={'Personal Details'} />
         <div className="flex justify-end gap-3">
-          <Button onClick={() => router.back()}>
+          <Button onClick={() => router.push("/account")}>
             <ChevronLeftIcon className="h-4 w-4" />
             Back
           </Button>
@@ -97,7 +98,7 @@ export default function StudentDetailPage() {
           <CardHeader className="text-xl font-bold">
             <div className="flex flex-row justify-between">
               <p>Contact Information</p>
-              {detailedUser.role === 'ADMIN' && (
+              {ownId !== null && userId === parseInt(ownId, 10) && (
                 <div
                   className="cursor-pointer"
                   onClick={() => {
@@ -135,7 +136,12 @@ export default function StudentDetailPage() {
 
               <div>
                 <p className="font-bold text-black">Gender</p>
-                <Select defaultValue={detailedUser?.gender} disabled={!editing}>
+                <Select defaultValue={detailedUser?.gender} disabled={!editing} onValueChange={(value) => {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    gender: value
+                  }));
+                }}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Choose your gender" />
                   </SelectTrigger>
@@ -204,12 +210,12 @@ export default function StudentDetailPage() {
                   </p>
                 )}
               </div>
-              <div className='mt-2'>
+              {/* <div className='mt-2'>
                 <Button onClick={() => router.back()}>
                   <KeyRoundIcon className="h-4 w-4 mr-4 " />
                   Change password
                 </Button>
-              </div>
+              </div> */}
             </div>
           </CardContent>
         </Card>

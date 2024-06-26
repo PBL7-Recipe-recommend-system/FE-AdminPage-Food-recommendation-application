@@ -73,7 +73,6 @@ const AccountCreateForm = ({ modalClose }: { modalClose: () => void }) => {
       }
     } catch (error) {
       console.error('Failed to add account:', error);
-      // You can show an error message to the user here if needed
     }
   };
 

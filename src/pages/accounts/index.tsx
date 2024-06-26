@@ -2,7 +2,7 @@ import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
 import PageHead from '@/components/shared/page-head';
 import { useSearchParams } from 'react-router-dom';
 import { useGetUsers } from './queries/queries';
-import AccountsTable from '@/pages/students/components/accounts-table';
+import AccountsTable from '@/pages/accounts/components/accounts-table';
 
 export default function StudentPage() {
   const [searchParams] = useSearchParams();

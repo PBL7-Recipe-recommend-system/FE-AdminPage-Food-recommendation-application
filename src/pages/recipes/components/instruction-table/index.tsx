@@ -1,7 +1,6 @@
 import DataTable from '@/components/shared/data-table';
-import { columns } from './columns';
 import InstructionTableActions from '@/pages/recipes/components/instruction-table/instruction-table-action';
-import { Toaster } from 'sonner';
+import { columns } from './columns';
 
 type TRecipesTableProps = {
     instructions: any;
@@ -16,7 +15,6 @@ export default function InstructionTable({
 }: TRecipesTableProps) {
     return (
         <>
-            <Toaster richColors position="top-right" />
 
             <InstructionTableActions />
             {instructions && (
