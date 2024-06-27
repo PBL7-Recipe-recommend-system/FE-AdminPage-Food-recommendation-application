@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Recipe } from '@/constants/data';
 import { useRouter } from '@/routes/hooks';
-import { Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { Edit, MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
 
 interface CellActionProps {
