@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Recipe } from '@/constants/data';
-import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from '@/routes/hooks';
-import { useEffect, useState } from 'react';
+import { Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { useState } from 'react';
 
 interface CellActionProps {
   data: Recipe;
@@ -23,9 +23,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onConfirm = async () => { };
 
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
 
   return (
     <>
@@ -51,9 +48,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
+          {/* <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Delete
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </>
